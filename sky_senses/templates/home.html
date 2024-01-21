@@ -1,0 +1,150 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{page}}</title>
+    <link rel="stylesheet" href="{% static 'style/home.css'%}">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/3fe62278dc.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <section class="home">
+        <div>
+            <nav>
+                <div class="first-nav">
+                    <h1 class="text-4xl text-white ml-6">Sky Sense</h1>
+                </div>
+                <div class="second-nav">
+                    <div class="second-nav-element text-center">
+                        <div class="inline">
+                            <a href="#" class="text-2xl text-white"> Home</a> 
+                        </div>
+                        <div class="inline">
+                            <a href="#" class="text-white"> Contact us</a>
+                        </div>
+                        <div class="dropdown inline">
+                            <a href=""><button class="dropbtn">Services 
+                                <i class="fa fa-caret-down"></i>
+                                </button>
+                            </a> 
+                            <div class="dropdown-content">
+                              <a href="{% url 'whatsapp_permission' %}">Whatsapp Service</a>
+                              <a href="#">Sms Service</a>
+                              <a href="#">Early Warning</a>
+                            </div>
+                        </div> 
+                    </div>  
+                    <div class="nav-login">
+                        {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}" ><button class="px-5 py-3 rounded-xl bg-cyan-600 text-white text-xl nav-login-anker">
+                            Logout
+                        </button></a>
+                        {% else %}
+                        <a href="{% url 'login' %}" ><button class="px-5 py-3 rounded-xl bg-cyan-600 text-white text-xl nav-login-anker">
+                            Login
+                        </button></a>
+                        {% endif %}
+                    </div>
+                </div>
+               
+            </nav>
+        </div>
+        <div class="weather-display-container">
+            <div class="ultimate-companion">
+                <div>
+                    <h1 class="text-4xl text-white">Your Ultimate <span class="special-color">Climate Companion</span> </h1>
+                </div>
+            </div>
+            <div class="location-display">
+
+                <div class="location-display-image">
+                    <div>
+                        <img src="{% static 'image/sun.png' %}">
+                    </div>
+                    
+                </div>  
+                <div class="overall-weather">
+                    <div class="overall-weather-details">
+                        <h2 class="text-4xl text-white my-5"> {{temp}}°C </h2>
+                        <h1 class="text-5xl text-white">{{first_main}}</h1>
+                    </div>
+                </div>
+                <div class="location">
+                    <div class="location-name">
+                        <h1 class="text-white text-6xl text-semibold"> {{land}} </h1>
+                    </div>
+                </div>
+            </div>
+            <div class="weather-forecast">
+                <div class="next-4days-forecast" style="display:flex;justify-content:space-between">
+                    {% for today in next_four%}
+                        <div class="days-col">
+                            <div class="class">
+                                <h1 class="text-2xl">{{today.2}}</h1>
+                                <div>
+                                    {% if today.0 < 300 %}
+                                        <img src="{% static 'image/thunder.png' %}" alt="">
+                                    {% elif today.0 < 400 %}
+                                        <img src="{% static 'image/drizzle.png' %}" alt="">
+                                    {% elif today.0 < 600 %}
+                                        <img src="{% static 'image/heayy-rain.png' %}" alt="">
+                                    {% elif today.0 < 700%}
+                                        <img src="{% static 'image/snowflake.png' %}" alt="">
+                                    {% elif today.0 < 800 %}
+                                        <img src="{% static 'image/clouds.png' %}" alt="">
+                                    {% else %}
+                                        <img src="{% static 'image/sun.png' %}" alt="">
+                                    {% endif %}
+                                    
+                                </div>
+                                <h1>{{today.1}}</h1>
+                            </div>
+                        </div>
+                    {% endfor%}
+                </div>
+            </div>
+        </div>
+
+
+
+    </section>
+    
+    <!-- services provided by us -->
+
+    <section class="services-provided-section">
+        <div class="upper-div">
+            <h1 class="text-5xl text-white">Services Provided By <span class="special-color">SkySense</span></h1>
+            <div class="services-row">
+                <div class="services-col text-center">
+                    <h1 class="text-3xl text-white ">Whatsapp Bot</h1>
+                    <div class="">
+                        <a href="{% url 'whatsapp_permission' %}"> <button class="custom-btn btn-12"><span>Click!</span><span>Get Now</span></button></a>
+                        <img src="{% static 'image/whatsapp.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="services-col text-center">
+                    <h1 class="text-3xl text-white ">SMS service</h1>
+                    <div>
+                        <a href="#"> <button class="custom-btn btn-12"><span>Click!</span><span>Get Now</span></button></a>
+                        <img src="{% static 'image/chat.png' %}" alt="">
+                    </div>
+                </div>
+                <div class="services-col text-center">
+                    <h1 class="text-3xl text-white">Early Warning System</h1>
+                    <div class="text-center">   
+                        <a href="#" class=""><button class="custom-btn btn-12"><span>Click!</span><span>Get Now</span></button></a>
+                        <img src="{% static 'image/warning.png' %}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    
+    
+</body>
+</html>
